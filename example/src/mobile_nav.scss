@@ -1,0 +1,124 @@
+@keyframes Sidebar-out {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+@keyframes Sidebar-in {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.mobile-menu {
+    display: none;
+    @media (max-width: 1024px) {
+        display: block;
+    }
+    .header_bar {
+        background: #211510;
+        height: 50px;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        border-bottom: 1px solid black;
+        .mobile-toggle {
+            height: 50px;
+            width: 50px;
+            cursor: pointer;
+            svg g {
+                fill: #f8b700;
+                transition: fill 200ms linear;
+            }
+            &:hover svg g {
+                fill: white;
+            }
+        }
+    }
+    nav {
+        display: block;
+        position: fixed;
+        top: 51px;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 360px;
+        overflow: hidden;
+        animation-name: Sidebar-out;
+        animation-duration: 0.2s;
+        animation-fill-mode: forwards;
+        background: #211510;
+        ul {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+            height: 100%;
+
+            li {
+                padding: 20px;
+                position: relative;
+                a {
+                    color: #f8b700;
+                    font-family: $roboto;
+                    font-weight: 500;
+                    height: 100%;
+                    text-decoration: none;
+
+                    transition: all 200ms linear;
+                    font-size: 18px;
+                    &:hover {
+                        color: white;
+                    }
+                }
+                .secondary-nav {
+                    max-height: 0px;
+                    overflow: hidden;
+                    transition: max-height 0ms linear;
+                    ul li {
+                        float: none;
+                        padding: 10px 20px;
+                        a {
+                            font-size: 16px;
+                        }
+                    }
+                    &.is-open {
+                        max-height: 100%;
+                        transition: max-height 200ms linear;
+                    }
+                }
+            }
+        }
+    }
+
+    &:not(.is-animating) {
+        nav {
+            display: none;
+        }
+    }
+    body.mobile-menu-open & {
+        &:before {
+            content: "";
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    }
+    &.is-open:not(.is-animating),
+    &.is-animating:not(.is-open) {
+        nav {
+            display: block;
+            animation-name: Sidebar-in;
+            animation-duration: 0.2s;
+            animation-fill-mode: forwards;
+        }
+    }
+}

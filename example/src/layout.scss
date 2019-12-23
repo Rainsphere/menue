@@ -1,0 +1,8 @@
+body {
+    padding: 0px;
+    margin: 0px;
+    min-height: calc(100vh + 300px);
+    &.mobile-menu-open {
+        overflow: hidden;
+    }
+}

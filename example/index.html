@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="../menue.js"></script>
+</head>
+<body>
+    <header>
+        <div class="desktop-menu">
+            <nav class="primary-nav">
+                <ul>
+                    <li>
+                        <a href="#">Menu Item 1</a>
+                        <div class="secondary-nav">
+                            <ul>
+                                <li><a href="#">Sub Menu Item 1</a></li>
+                                <li><a href="#">Sub Menu Item 2</a></li>
+                                <li><a href="#">Sub Menu Item 3</a></li>
+                                <li><a href="#">Sub Menu Item 4</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">Menu Item 2</a>
+                        <div class="secondary-nav">
+                            <ul>
+                                <li><a href="#">Sub Menu Item 1</a></li>
+                                <li><a href="#">Sub Menu Item 2</a></li>
+                                <li><a href="#">Sub Menu Item 3</a></li>
+                                <li><a href="#">Sub Menu Item 4</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="#">Menu Item 3</a></li>
+                    <li><a href="#">Menu Item 4</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="mobile-menu">
+            <div class="header_bar">
+                <div class="mobile-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" focusable="false">
+                        <g>
+                            <rect x="15" y="16" width="18" height="2"></rect>
+                            <rect x="15" y="23" width="18" height="2"></rect>
+                            <rect x="15" y="30" width="18" height="2"></rect>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <nav class="primary-nav">
+                <ul>
+                    <li>
+                        <a href="#main1">Menu Item 1</a>
+                        <div class="secondary-nav">
+                            <ul>
+                                <li>
+                                    <a href="#sub1">Sub Menu Item 1</a>
+                                    <div class="tertiary-nav"><ul><li><a href="#tert1">Tertiary Item 1</a></li></ul></div>
+                                    
+                                </li>
+                                <li><a href="#sub2">Sub Menu Item 2</a></li>
+                                <li><a href="#sub3">Sub Menu Item 3</a></li>
+                                <li><a href="#sub4">Sub Menu Item 4</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#main2">Menu Item 2</a>
+                        <div class="secondary-nav">
+                            <ul>
+                                <li><a href="#">Sub Menu Item 1</a></li>
+                                <li><a href="#">Sub Menu Item 2</a></li>
+                                <li><a href="#">Sub Menu Item 3</a></li>
+                                <li><a href="#">Sub Menu Item 4</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="#main3">Menu Item 3</a></li>
+                    <li><a href="#main4">Menu Item 4</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <script>
+        var menueOptions = {
+            desktopStickyOffset: 10,
+            onDesktopStickyChange: function(instance){
+                // var header = document.querySelectorAll( 'header' )[0];
+                // if(instance.desktopMenu.classList.contains('is-sticky')){
+                //     //Make header sticky
+                //     header.classList.add('is-sticky');
+                // }
+                // else
+                // header.classList.remove('is-sticky');
+            },
+        };
+    var menue = new Menue(menueOptions);
+    </script>
+</body>
+</html>

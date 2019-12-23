@@ -1,0 +1,83 @@
+.desktop-menu {
+    position: relative;
+    width: 100%;
+    @media (max-width: 1024px) {
+        display: none;
+    }
+    nav {
+        background: #211510;
+        height: 50px;
+        margin: 40px 30px 0;
+
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+
+        border-bottom: 1px solid black;
+        ul {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+            height: 100%;
+
+            li {
+                float: left;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0px 20px;
+                height: 100%;
+                position: relative;
+                a {
+                    color: #f8b700;
+                    font-family: $roboto;
+                    font-weight: 500;
+                    height: 100%;
+                    text-decoration: none;
+                    display: flex;
+                    align-items: center;
+                    transition: all 200ms linear;
+                    font-size: 18px;
+                    &:hover {
+                        color: white;
+                    }
+                }
+                .secondary-nav {
+                    position: absolute;
+                    top: calc(100% + 1px);
+                    left: 0;
+                    max-height: 0px;
+                    opacity: 0;
+                    overflow: hidden;
+                    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+                    background: #211510;
+                    min-width: 200px;
+                    ul li {
+                        float: none;
+                        padding: 10px 20px;
+                        a {
+                            font-size: 16px;
+                        }
+                    }
+                }
+                &:hover {
+                    .secondary-nav {
+                        max-height: 100vh;
+                        opacity: 1;
+                        transition: max-height 0.7s ease-out,
+                            opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+                    }
+                }
+            }
+        }
+    }
+    &.is-sticky {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+
+        z-index: 1000;
+        nav {
+            margin: 0px;
+        }
+    }
+}
