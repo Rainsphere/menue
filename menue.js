@@ -15,11 +15,13 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  * DEALINGS IN THE SOFTWARE.
  *
- * @summary short description for the file
  * @author David Spencer
+ * @version 1.0.0
+ * 
+ * https://github.com/Rainsphere/menue
  *
  * Created at     : 2019-12-23 09:43:09 
- * Last modified  : 2019-12-23 09:49:26
+ * Last modified  : 2019-12-23 10:37:15
  */
 
 ( function( root, factory ) {
@@ -42,26 +44,26 @@
         firstLevelNavSelector: '.primary-nav',
         secondLevelNavSelector: '.secondary-nav',
         thirdLevelNavSelector: '.tertiary-nav',
-        closeButtonClass: '.menu-close-button',
+        itemToggleButtonClass: '.item-toggle-button',
         hasSecondaryClass: 'has-secondary',
         hasTertiaryClass: 'has-tertiary',
+        openClass: 'is-open',
         //Desktop Options
         desktopMenuSelector: '.desktop-menu',
         desktopStickyOffset: 50,
         desktopStickyClass: 'is-sticky',
-        desktopHasSecondaryCloseButton: false,
-        desktopHasTertiaryCloseButton: false,
+        desktopHasSecondaryToggleButton: false,
+        desktopHasTertiaryToggleButton: false,
         //Mobile Options
         mobileMenuSelector: '.mobile-menu',
         mobileToggleSelector: '.mobile-toggle',
-        mobileOpenClass: 'is-open',
         mobileAnimatingClass: 'is-animating',
         mobileDisplayDelay: 200,
         mobileOpenBodyClass: 'mobile-menu-open',
-        mobileHasSecondaryCloseButton: false,
-        mobileHasTertiaryCloseButton: false,
+        mobileHasSecondaryToggleButton: false,
+        mobileHasTertiaryToggleButton: false,
         //Callbacks
-        onDesktopStickyChange: function(instance){}
+        onDesktopStickyChange: function(){}
     };
     /** 
      * Merge defaults with user options
@@ -106,6 +108,11 @@
         });
     };
 
+    var removeStickyListener = function()
+    {
+        window.removeEventListener('scroll');
+    }
+
     var setupMobileToggleListener = function(instance){
         var bodyEl = document.querySelectorAll( 'body' )[0];
         instance.mobileToggle.forEach(function(toggle){
@@ -115,7 +122,7 @@
                         instance.mobileMenu.classList.add(instance.options.mobileAnimatingClass);
                         setTimeout(function(){
                             bodyEl.classList.remove(instance.options.mobileOpenBodyClass);
-                            instance.mobileMenu.classList.remove(instance.options.mobileOpenClass);
+                            instance.mobileMenu.classList.remove(instance.options.openClass);
                             instance.mobileMenu.classList.remove(instance.options.mobileAnimatingClass);
                             instance.mobileOpen = false;
                         }, instance.options.mobileDisplayDelay);
@@ -125,7 +132,7 @@
                         instance.mobileMenu.classList.add(instance.options.mobileAnimatingClass);
                         bodyEl.classList.add(instance.options.mobileOpenBodyClass);
                         setTimeout(function(){
-                            instance.mobileMenu.classList.add(instance.options.mobileOpenClass);
+                            instance.mobileMenu.classList.add(instance.options.openClass);
                             instance.mobileMenu.classList.remove(instance.options.mobileAnimatingClass);
                             instance.mobileOpen = true;
                         }, instance.options.mobileDisplayDelay);
@@ -133,6 +140,12 @@
                     
                 }
             });
+        });
+    }
+
+    var removeMobileToggleListener = function(instance){
+        instance.mobileToggle.forEach(function(toggle){
+            toggle.removeEventListener('click');
         });
     }
 
@@ -160,8 +173,27 @@
     }
 
     var setupMobileMenuItemListener = function(instance){
-        if(instance.options.mobileHasSecondaryCloseButton){
+        if(instance.options.mobileHasSecondaryToggleButton){
             //Listen for close button clicks to open/close the secondary-nav
+            var primaryToggleButtons = instance.mobileMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li ' + instance.options.itemToggleButtonClass);
+            primaryToggleButtons.forEach(function(button){
+                button.addEventListener('click', function(){
+                    var secondaryNav = button.parentNode.querySelector(instance.options.secondLevelNavSelector);
+                    if(!button.classList.contains(instance.options.openClass))
+                    {
+                        if(secondaryNav) {
+                            button.classList.add(instance.options.openClass);
+                            secondaryNav.classList.add(instance.options.openClass);
+                        }
+                    }
+                    else{
+                        if(secondaryNav) {
+                            button.classList.remove(instance.options.openClass);
+                            secondaryNav.classList.remove(instance.options.openClass);
+                        }
+                    }
+                });
+            });
         }else{
             //Listen for anchor clicks to open/close the secondary-nav
             var primaryAnchors = instance.mobileMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li > a');
@@ -170,23 +202,23 @@
 
                     var resetAll = function(){
                         primaryAnchors.forEach(function(primAnchor){
-                            primAnchor.classList.remove(instance.options.mobileOpenClass);
+                            primAnchor.classList.remove(instance.options.openClass);
                         });
                         var allSecondaryNavs= instance.mobileMenu.querySelectorAll(instance.options.secondLevelNavSelector);
                         allSecondaryNavs.forEach(function(nav){
-                            nav.classList.remove(instance.options.mobileOpenClass);
+                            nav.classList.remove(instance.options.openClass);
                         });
                     }
 
-                    if(!anchor.classList.contains(instance.options.mobileOpenClass) && anchor.parentNode.classList.contains(instance.options.hasSecondaryClass))
+                    if(!anchor.classList.contains(instance.options.openClass) && anchor.parentNode.classList.contains(instance.options.hasSecondaryClass))
                     {
                         event.preventDefault();
                         resetAll();
                         
                         var secondaryNav = anchor.parentNode.querySelector(instance.options.secondLevelNavSelector);
                         if(secondaryNav) {
-                            anchor.classList.add(instance.options.mobileOpenClass);
-                            secondaryNav.classList.add(instance.options.mobileOpenClass);
+                            anchor.classList.add(instance.options.openClass);
+                            secondaryNav.classList.add(instance.options.openClass);
                         }
                     }
                     else{
@@ -196,7 +228,62 @@
                 });
             });
         }
-        if(instance.options.mobileHasTertiaryCloseButton){}else{}
+        if(instance.options.mobileHasTertiaryToggleButton){
+            //Listen for close button clicks to open/close the tertiary-nav
+            var secondaryToggleButtons = instance.mobileMenu.querySelectorAll(instance.options.secondLevelNavSelector + ' > ul > li ' + instance.options.itemToggleButtonClass);
+            secondaryToggleButtons.forEach(function(button){
+                button.addEventListener('click', function(){
+                    var tertiaryNav = button.parentNode.querySelector(instance.options.thirdLevelNavSelector);
+                    if(!button.classList.contains(instance.options.openClass))
+                    {
+                        if(tertiaryNav) {
+                            button.classList.add(instance.options.openClass);
+                            tertiaryNav.classList.add(instance.options.openClass);
+                        }
+                    }
+                    else{
+                        if(tertiaryNav) {
+                            button.classList.remove(instance.options.openClass);
+                            tertiaryNav.classList.remove(instance.options.openClass);
+                        }
+                    }
+                });
+            });
+        }else{
+             //Listen for anchor clicks to open/close the tertiary-nav
+             var secondaryAnchors = instance.mobileMenu.querySelectorAll(instance.options.secondLevelNavSelector + ' > ul > li > a');
+             secondaryAnchors.forEach(function(anchor){
+                 anchor.addEventListener('click', function(event){
+ 
+                     var resetAll = function(){
+                         secondaryAnchors.forEach(function(secAnchor){
+                             secAnchor.classList.remove(instance.options.openClass);
+                         });
+
+                         var allTertiaryNavs= anchor.parentNode.parentNode.querySelectorAll(instance.options.thirdLevelNavSelector);
+                         allTertiaryNavs.forEach(function(nav){
+                             nav.classList.remove(instance.options.openClass);
+                         });
+                     }
+ 
+                     if(!anchor.classList.contains(instance.options.openClass) && anchor.parentNode.classList.contains(instance.options.hasTertiaryClass))
+                     {
+                         event.preventDefault();
+                         resetAll();
+                         
+                         var tertiaryNav = anchor.parentNode.querySelector(instance.options.thirdLevelNavSelector);
+                         if(tertiaryNav) {
+                             anchor.classList.add(instance.options.openClass);
+                             tertiaryNav.classList.add(instance.options.openClass);
+                         }
+                     }
+                     else{
+                         resetAll();
+                     }
+                     
+                 });
+             });
+        }
     }
 
     /**
@@ -206,7 +293,7 @@
      */
     function Plugin( options ) {
         this.options = extend( defaults, options );
-        this.init(); // Initialization Code Here
+        this.init();
     }
 
     /**
@@ -228,7 +315,8 @@
             setupMobileMenuItemListener(this);
         }, // #! init
         destroy: function() {
-            // Remove any event listeners and undo any "init" actions here...
+            removeStickyListener();
+            removeMobileToggleListener(this);
         },
     };
     return Plugin;

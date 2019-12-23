@@ -92,6 +92,22 @@
                         transition: max-height 200ms linear;
                     }
                 }
+                .tertiary-nav {
+                    max-height: 0px;
+                    overflow: hidden;
+                    transition: max-height 0ms linear;
+                    ul li {
+                        float: none;
+                        padding: 10px 20px;
+                        a {
+                            font-size: 14px;
+                        }
+                    }
+                    &.is-open {
+                        max-height: 100%;
+                        transition: max-height 200ms linear;
+                    }
+                }
             }
         }
     }

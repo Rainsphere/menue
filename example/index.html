@@ -9,18 +9,42 @@
             <nav class="primary-nav">
                 <ul>
                     <li>
-                        <a href="#">Menu Item 1</a>
+                        <a href="#main1">Menu Item 1</a><span class="item-toggle-button">Toggle</span>
                         <div class="secondary-nav">
                             <ul>
-                                <li><a href="#">Sub Menu Item 1</a></li>
-                                <li><a href="#">Sub Menu Item 2</a></li>
-                                <li><a href="#">Sub Menu Item 3</a></li>
-                                <li><a href="#">Sub Menu Item 4</a></li>
+                                <li>
+                                    <a href="#sub1">Sub Menu Item 1</a><span class="item-toggle-button">Toggle</span>
+                                    <div class="tertiary-nav">
+                                        <ul>
+                                            <li>
+                                                <a href="#tert1">Tertiary Item 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#tert2">Tertiary Item 2</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                <a href="#sub2">Sub Menu Item 2</a><span class="item-toggle-button">Toggle</span>
+                                    <div class="tertiary-nav">
+                                        <ul>
+                                            <li>
+                                                <a href="#tert1">Tertiary Item 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#tert2">Tertiary Item 2</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="#sub3">Sub Menu Item 3</a></li>
+                                <li><a href="#sub4">Sub Menu Item 4</a></li>
                             </ul>
                         </div>
                     </li>
                     <li>
-                        <a href="#">Menu Item 2</a>
+                        <a href="#main2">Menu Item 2</a><span class="item-toggle-button">Toggle</span>
                         <div class="secondary-nav">
                             <ul>
                                 <li><a href="#">Sub Menu Item 1</a></li>
@@ -30,8 +54,8 @@
                             </ul>
                         </div>
                     </li>
-                    <li><a href="#">Menu Item 3</a></li>
-                    <li><a href="#">Menu Item 4</a></li>
+                    <li><a href="#main3">Menu Item 3</a></li>
+                    <li><a href="#main4">Menu Item 4</a></li>
                 </ul>
             </nav>
         </div>
@@ -50,22 +74,42 @@
             <nav class="primary-nav">
                 <ul>
                     <li>
-                        <a href="#main1">Menu Item 1</a>
+                        <a href="#main1">Menu Item 1</a><span class="item-toggle-button">Toggle</span>
                         <div class="secondary-nav">
                             <ul>
                                 <li>
-                                    <a href="#sub1">Sub Menu Item 1</a>
-                                    <div class="tertiary-nav"><ul><li><a href="#tert1">Tertiary Item 1</a></li></ul></div>
-                                    
+                                    <a href="#sub1">Sub Menu Item 1</a><span class="item-toggle-button">Toggle</span>
+                                    <div class="tertiary-nav">
+                                        <ul>
+                                            <li>
+                                                <a href="#tert1">Tertiary Item 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#tert2">Tertiary Item 2</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </li>
-                                <li><a href="#sub2">Sub Menu Item 2</a></li>
+                                <li>
+                                <a href="#sub2">Sub Menu Item 2</a><span class="item-toggle-button">Toggle</span>
+                                    <div class="tertiary-nav">
+                                        <ul>
+                                            <li>
+                                                <a href="#tert1">Tertiary Item 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#tert2">Tertiary Item 2</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                                 <li><a href="#sub3">Sub Menu Item 3</a></li>
                                 <li><a href="#sub4">Sub Menu Item 4</a></li>
                             </ul>
                         </div>
                     </li>
                     <li>
-                        <a href="#main2">Menu Item 2</a>
+                        <a href="#main2">Menu Item 2</a><span class="item-toggle-button">Toggle</span>
                         <div class="secondary-nav">
                             <ul>
                                 <li><a href="#">Sub Menu Item 1</a></li>
@@ -84,14 +128,9 @@
     <script>
         var menueOptions = {
             desktopStickyOffset: 10,
+            mobileHasSecondaryToggleButton: true,
+            mobileHasTertiaryToggleButton: true,
             onDesktopStickyChange: function(instance){
-                // var header = document.querySelectorAll( 'header' )[0];
-                // if(instance.desktopMenu.classList.contains('is-sticky')){
-                //     //Make header sticky
-                //     header.classList.add('is-sticky');
-                // }
-                // else
-                // header.classList.remove('is-sticky');
             },
         };
     var menue = new Menue(menueOptions);
