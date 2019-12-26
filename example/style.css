@@ -68,14 +68,32 @@ body.mobile-menu-open {
 .desktop-menu nav ul li .secondary-nav ul li {
   float: none;
   padding: 10px 20px;
+  display: block;
 }
 .desktop-menu nav ul li .secondary-nav ul li a {
   font-size: 16px;
+  display: inline-block;
 }
-.desktop-menu nav ul li:hover .secondary-nav {
+.desktop-menu nav ul li .secondary-nav.is-open {
   max-height: 100vh;
   opacity: 1;
   transition: max-height 0.7s ease-out, opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.desktop-menu nav ul li .tertiary-nav {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0ms linear;
+}
+.desktop-menu nav ul li .tertiary-nav ul li {
+  float: none;
+  padding: 10px 20px;
+}
+.desktop-menu nav ul li .tertiary-nav ul li a {
+  font-size: 14px;
+}
+.desktop-menu nav ul li .tertiary-nav.is-open {
+  max-height: 100%;
+  transition: max-height 200ms linear;
 }
 .desktop-menu.is-sticky {
   position: fixed;

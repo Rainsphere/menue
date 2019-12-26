@@ -21,7 +21,7 @@
  * https://github.com/Rainsphere/menue
  *
  * Created at     : 2019-12-23 09:43:09 
- * Last modified  : 2019-12-23 10:37:15
+ * Last modified  : 2019-12-26 10:12:38
  */
 
 ( function( root, factory ) {
@@ -172,10 +172,58 @@
         });
     }
 
+    var setupDesktopMenuItemListener = function(instance){
+        if(instance.options.desktopHasSecondaryToggleButton){
+            //Listen for close button clicks to open/close the secondary-nav
+            var primaryToggleButtons = instance.desktopMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li > ' + instance.options.itemToggleButtonClass);
+            primaryToggleButtons.forEach(function(button){
+                button.addEventListener('click', function(){
+                    var secondaryNav = button.parentNode.querySelector(instance.options.secondLevelNavSelector);
+                    if(!button.classList.contains(instance.options.openClass))
+                    {
+                        if(secondaryNav) {
+                            button.classList.add(instance.options.openClass);
+                            secondaryNav.classList.add(instance.options.openClass);
+                        }
+                    }
+                    else{
+                        if(secondaryNav) {
+                            button.classList.remove(instance.options.openClass);
+                            secondaryNav.classList.remove(instance.options.openClass);
+                        }
+                    }
+                });
+            });
+        }
+
+        if(instance.options.desktopHasTertiaryToggleButton){
+            //Listen for close button clicks to open/close the tertiary-nav
+            var secondaryToggleButtons = instance.desktopMenu.querySelectorAll(instance.options.secondLevelNavSelector + ' > ul > li > ' + instance.options.itemToggleButtonClass);
+            secondaryToggleButtons.forEach(function(button){
+                button.addEventListener('click', function(){
+                    var tertiaryNav = button.parentNode.querySelector(instance.options.thirdLevelNavSelector);
+                    if(!button.classList.contains(instance.options.openClass))
+                    {
+                        if(tertiaryNav) {
+                            button.classList.add(instance.options.openClass);
+                            tertiaryNav.classList.add(instance.options.openClass);
+                        }
+                    }
+                    else{
+                        if(tertiaryNav) {
+                            button.classList.remove(instance.options.openClass);
+                            tertiaryNav.classList.remove(instance.options.openClass);
+                        }
+                    }
+                });
+            });
+        }
+    }
+
     var setupMobileMenuItemListener = function(instance){
         if(instance.options.mobileHasSecondaryToggleButton){
             //Listen for close button clicks to open/close the secondary-nav
-            var primaryToggleButtons = instance.mobileMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li ' + instance.options.itemToggleButtonClass);
+            var primaryToggleButtons = instance.mobileMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li > ' + instance.options.itemToggleButtonClass);
             primaryToggleButtons.forEach(function(button){
                 button.addEventListener('click', function(){
                     var secondaryNav = button.parentNode.querySelector(instance.options.secondLevelNavSelector);
@@ -230,7 +278,7 @@
         }
         if(instance.options.mobileHasTertiaryToggleButton){
             //Listen for close button clicks to open/close the tertiary-nav
-            var secondaryToggleButtons = instance.mobileMenu.querySelectorAll(instance.options.secondLevelNavSelector + ' > ul > li ' + instance.options.itemToggleButtonClass);
+            var secondaryToggleButtons = instance.mobileMenu.querySelectorAll(instance.options.secondLevelNavSelector + ' > ul > li > ' + instance.options.itemToggleButtonClass);
             secondaryToggleButtons.forEach(function(button){
                 button.addEventListener('click', function(){
                     var tertiaryNav = button.parentNode.querySelector(instance.options.thirdLevelNavSelector);
@@ -310,6 +358,7 @@
             this.mobileToggle = document.querySelectorAll( this.options.mobileToggleSelector );
             this.mobileOpen = false;
             setupStickyListener(this);
+            setupDesktopMenuItemListener(this);
             setupMobileClasses(this);
             setupMobileToggleListener(this);
             setupMobileMenuItemListener(this);

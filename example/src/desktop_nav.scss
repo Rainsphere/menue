@@ -54,17 +54,37 @@
                     ul li {
                         float: none;
                         padding: 10px 20px;
+                        display: block;
                         a {
                             font-size: 16px;
+                            display: inline-block;
                         }
                     }
-                }
-                &:hover {
-                    .secondary-nav {
+                    &.is-open {
                         max-height: 100vh;
                         opacity: 1;
                         transition: max-height 0.7s ease-out,
                             opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+                    }
+                }
+                .tertiary-nav {
+                    max-height: 0px;
+                    overflow: hidden;
+                    transition: max-height 0ms linear;
+                    ul li {
+                        float: none;
+                        padding: 10px 20px;
+                        a {
+                            font-size: 14px;
+                        }
+                    }
+                    &.is-open {
+                        max-height: 100%;
+                        transition: max-height 200ms linear;
+                    }
+                }
+                &:hover {
+                    .secondary-nav {
                     }
                 }
             }
