@@ -21,7 +21,7 @@
  * https://github.com/Rainsphere/menue
  *
  * Created at     : 2019-12-23 09:43:09 
- * Last modified  : 2019-12-27 09:34:13
+ * Last modified  : 2019-12-27 09:41:25
  */
 
 ( function( root, factory ) {
@@ -93,7 +93,8 @@
     var setupStickyListener = function(instance){
       
         window.addEventListener('scroll', function(){
-            var scrollTop = window.scrollY;
+       
+            var scrollTop = window.pageYOffset;
          
             if(scrollTop >= instance.options.desktopStickyOffset)
             {

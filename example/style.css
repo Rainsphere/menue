@@ -4,8 +4,10 @@ body {
   margin: 0px;
   min-height: calc(100vh + 300px);
 }
-body.mobile-menu-open {
-  overflow: hidden;
+@media (max-width: 1024px) {
+  body.mobile-menu-open {
+    overflow: hidden;
+  }
 }
 
 .desktop-menu {
