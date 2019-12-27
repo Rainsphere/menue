@@ -1,4 +1,4 @@
-# menue
+# Menue
 
 Vanilla Javascript menu manager.
 
