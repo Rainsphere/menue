@@ -21,7 +21,7 @@
  * https://github.com/Rainsphere/menue
  *
  * Created at     : 2019-12-23 09:43:09 
- * Last modified  : 2019-12-26 10:12:38
+ * Last modified  : 2019-12-27 09:34:13
  */
 
 ( function( root, factory ) {
@@ -115,7 +115,9 @@
 
     var setupMobileToggleListener = function(instance){
         var bodyEl = document.querySelectorAll( 'body' )[0];
-        instance.mobileToggle.forEach(function(toggle){
+
+        for(var i = 0; i < instance.mobileToggle.length; i++){
+            var toggle = instance.mobileToggle[i];
             toggle.addEventListener('click', function(){
                 if(instance.mobileOpen)
                 {
@@ -140,83 +142,88 @@
                     
                 }
             });
-        });
+        }
     }
 
     var removeMobileToggleListener = function(instance){
-        instance.mobileToggle.forEach(function(toggle){
-            toggle.removeEventListener('click');
-        });
+        for(var i = 0; i < instance.mobileToggle.length; i++){
+            instance.mobileToggle[i].removeEventListener('click');
+        }
     }
 
     var setupMobileClasses = function(instance){
         var primaryItems = instance.mobileMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li');
 
         //check for secondary nav
-        primaryItems.forEach(function(primItem){
-            var secondaryItem = primItem.querySelector(instance.options.secondLevelNavSelector);
+        for(var i = 0; i < primaryItems.length; i++)
+        {
+            var secondaryItem = primaryItems[i].querySelector(instance.options.secondLevelNavSelector);
             if(secondaryItem)
             {
                 //we have secondary nav
-                primItem.classList.add(instance.options.hasSecondaryClass);
+                primaryItems[i].classList.add(instance.options.hasSecondaryClass);
                 //check for tertiary nav
                 var secondaryItems = secondaryItem.querySelectorAll('ul > li');
-                secondaryItems.forEach(function(secItem){
-                    var tertiaryItem = secItem.querySelector(instance.options.thirdLevelNavSelector);
+                for(var j = 0; j < secondaryItems.length; j++){
+                    var tertiaryItem = secondaryItems[j].querySelector(instance.options.thirdLevelNavSelector);
                     if(tertiaryItem)
                     {   
-                        secItem.classList.add(instance.options.hasTertiaryClass);
+                        secondaryItems[j].classList.add(instance.options.hasTertiaryClass);
                     }
-                });
+                }
             }
-        });
+
+        }
     }
 
     var setupDesktopMenuItemListener = function(instance){
         if(instance.options.desktopHasSecondaryToggleButton){
             //Listen for close button clicks to open/close the secondary-nav
             var primaryToggleButtons = instance.desktopMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li > ' + instance.options.itemToggleButtonClass);
-            primaryToggleButtons.forEach(function(button){
-                button.addEventListener('click', function(){
-                    var secondaryNav = button.parentNode.querySelector(instance.options.secondLevelNavSelector);
-                    if(!button.classList.contains(instance.options.openClass))
+            for(var i = 0; i < primaryToggleButtons.length; i++)
+            {
+                var primToggleButton = primaryToggleButtons[i];
+                primToggleButton.addEventListener('click', function(){
+                    var secondaryNav = this.parentNode.querySelector(instance.options.secondLevelNavSelector);
+                    if(!this.classList.contains(instance.options.openClass))
                     {
                         if(secondaryNav) {
-                            button.classList.add(instance.options.openClass);
+                            this.classList.add(instance.options.openClass);
                             secondaryNav.classList.add(instance.options.openClass);
                         }
                     }
                     else{
                         if(secondaryNav) {
-                            button.classList.remove(instance.options.openClass);
+                            this.classList.remove(instance.options.openClass);
                             secondaryNav.classList.remove(instance.options.openClass);
                         }
                     }
                 });
-            });
+            }
         }
 
         if(instance.options.desktopHasTertiaryToggleButton){
             //Listen for close button clicks to open/close the tertiary-nav
             var secondaryToggleButtons = instance.desktopMenu.querySelectorAll(instance.options.secondLevelNavSelector + ' > ul > li > ' + instance.options.itemToggleButtonClass);
-            secondaryToggleButtons.forEach(function(button){
-                button.addEventListener('click', function(){
-                    var tertiaryNav = button.parentNode.querySelector(instance.options.thirdLevelNavSelector);
-                    if(!button.classList.contains(instance.options.openClass))
+            for(var s = 0; s < secondaryToggleButtons.length; s++){
+                var secToggleButton = secondaryToggleButtons[s];
+                secToggleButton.addEventListener('click', function(){
+                    var tertiaryNav = this.parentNode.querySelector(instance.options.thirdLevelNavSelector);
+                    if(!this.classList.contains(instance.options.openClass))
                     {
                         if(tertiaryNav) {
-                            button.classList.add(instance.options.openClass);
+                            this.classList.add(instance.options.openClass);
                             tertiaryNav.classList.add(instance.options.openClass);
                         }
                     }
                     else{
                         if(tertiaryNav) {
-                            button.classList.remove(instance.options.openClass);
+                            this.classList.remove(instance.options.openClass);
                             tertiaryNav.classList.remove(instance.options.openClass);
                         }
                     }
                 });
-            });
+            }
         }
     }
 
@@ -224,48 +231,52 @@
         if(instance.options.mobileHasSecondaryToggleButton){
             //Listen for close button clicks to open/close the secondary-nav
             var primaryToggleButtons = instance.mobileMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li > ' + instance.options.itemToggleButtonClass);
-            primaryToggleButtons.forEach(function(button){
-                button.addEventListener('click', function(){
-                    var secondaryNav = button.parentNode.querySelector(instance.options.secondLevelNavSelector);
-                    if(!button.classList.contains(instance.options.openClass))
+            for(var i = 0; i < primaryToggleButtons.length; i++){
+                var primToggleButton = primaryToggleButtons[i];
+                primToggleButton.addEventListener('click', function(){
+                    var secondaryNav = this.parentNode.querySelector(instance.options.secondLevelNavSelector);
+                    if(!this.classList.contains(instance.options.openClass))
                     {
                         if(secondaryNav) {
-                            button.classList.add(instance.options.openClass);
+                            this.classList.add(instance.options.openClass);
                             secondaryNav.classList.add(instance.options.openClass);
                         }
                     }
                     else{
                         if(secondaryNav) {
-                            button.classList.remove(instance.options.openClass);
+                            this.classList.remove(instance.options.openClass);
                             secondaryNav.classList.remove(instance.options.openClass);
                         }
                     }
                 });
-            });
+            }
+           
         }else{
             //Listen for anchor clicks to open/close the secondary-nav
             var primaryAnchors = instance.mobileMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li > a');
-            primaryAnchors.forEach(function(anchor){
+            for(var a = 0; i < primaryAnchors.length; a++){
+                var anchor = primaryAnchors[a];
                 anchor.addEventListener('click', function(event){
-
                     var resetAll = function(){
-                        primaryAnchors.forEach(function(primAnchor){
-                            primAnchor.classList.remove(instance.options.openClass);
-                        });
+                        for(var j = 0; j < primaryAnchors.length; j++){
+                            primaryAnchors[j].classList.remove(instance.options.openClass);
+                        }
+                     
                         var allSecondaryNavs= instance.mobileMenu.querySelectorAll(instance.options.secondLevelNavSelector);
-                        allSecondaryNavs.forEach(function(nav){
-                            nav.classList.remove(instance.options.openClass);
-                        });
+                        for(var k = 0; k < allSecondaryNavs.length; k++)
+                        {
+                            allSecondaryNavs[k].classList.remove(instance.options.openClass);
+                        }
                     }
 
-                    if(!anchor.classList.contains(instance.options.openClass) && anchor.parentNode.classList.contains(instance.options.hasSecondaryClass))
+                    if(!this.classList.contains(instance.options.openClass) && this.parentNode.classList.contains(instance.options.hasSecondaryClass))
                     {
                         event.preventDefault();
                         resetAll();
                         
-                        var secondaryNav = anchor.parentNode.querySelector(instance.options.secondLevelNavSelector);
+                        var secondaryNav = this.parentNode.querySelector(instance.options.secondLevelNavSelector);
                         if(secondaryNav) {
-                            anchor.classList.add(instance.options.openClass);
+                            this.classList.add(instance.options.openClass);
                             secondaryNav.classList.add(instance.options.openClass);
                         }
                     }
@@ -274,63 +285,67 @@
                     }
                     
                 });
-            });
+            }
+         
         }
         if(instance.options.mobileHasTertiaryToggleButton){
             //Listen for close button clicks to open/close the tertiary-nav
             var secondaryToggleButtons = instance.mobileMenu.querySelectorAll(instance.options.secondLevelNavSelector + ' > ul > li > ' + instance.options.itemToggleButtonClass);
-            secondaryToggleButtons.forEach(function(button){
-                button.addEventListener('click', function(){
-                    var tertiaryNav = button.parentNode.querySelector(instance.options.thirdLevelNavSelector);
-                    if(!button.classList.contains(instance.options.openClass))
+            for(var l = 0; l < secondaryToggleButtons.length; l++){
+                var secTogButton = secondaryToggleButtons[l];
+                secTogButton.addEventListener('click', function(){
+                    var tertiaryNav = this.parentNode.querySelector(instance.options.thirdLevelNavSelector);
+                    if(!this.classList.contains(instance.options.openClass))
                     {
                         if(tertiaryNav) {
-                            button.classList.add(instance.options.openClass);
+                            this.classList.add(instance.options.openClass);
                             tertiaryNav.classList.add(instance.options.openClass);
                         }
                     }
                     else{
                         if(tertiaryNav) {
-                            button.classList.remove(instance.options.openClass);
+                            this.classList.remove(instance.options.openClass);
                             tertiaryNav.classList.remove(instance.options.openClass);
                         }
                     }
                 });
-            });
+            }
+           
         }else{
              //Listen for anchor clicks to open/close the tertiary-nav
              var secondaryAnchors = instance.mobileMenu.querySelectorAll(instance.options.secondLevelNavSelector + ' > ul > li > a');
-             secondaryAnchors.forEach(function(anchor){
-                 anchor.addEventListener('click', function(event){
- 
-                     var resetAll = function(){
-                         secondaryAnchors.forEach(function(secAnchor){
-                             secAnchor.classList.remove(instance.options.openClass);
-                         });
+             
+             for(var m = 0; m < secondaryAnchors.length; m++){
+                 var secAnchor = secondaryAnchors[m];
+                 secAnchor.addEventListener('click', function(event){
+                    var resetAll = function(){
+                        for(var j = 0; j < secondaryAnchors.length; j++){
+                            secondaryAnchors[j].classList.remove(instance.options.openClass);
+                        }
 
-                         var allTertiaryNavs= anchor.parentNode.parentNode.querySelectorAll(instance.options.thirdLevelNavSelector);
-                         allTertiaryNavs.forEach(function(nav){
-                             nav.classList.remove(instance.options.openClass);
-                         });
-                     }
- 
-                     if(!anchor.classList.contains(instance.options.openClass) && anchor.parentNode.classList.contains(instance.options.hasTertiaryClass))
-                     {
-                         event.preventDefault();
-                         resetAll();
-                         
-                         var tertiaryNav = anchor.parentNode.querySelector(instance.options.thirdLevelNavSelector);
-                         if(tertiaryNav) {
-                             anchor.classList.add(instance.options.openClass);
-                             tertiaryNav.classList.add(instance.options.openClass);
-                         }
-                     }
-                     else{
-                         resetAll();
-                     }
-                     
-                 });
-             });
+                        var allTertiaryNavs= anchor.parentNode.parentNode.querySelectorAll(instance.options.thirdLevelNavSelector);
+                        for(var k = 0; k < allTertiaryNavs.length; k++){
+                            allTertiaryNavs[k].classList.remove(instance.options.openClass);
+                        }
+                    }
+
+                    if(!this.classList.contains(instance.options.openClass) && this.parentNode.classList.contains(instance.options.hasTertiaryClass))
+                    {
+                        event.preventDefault();
+                        resetAll();
+                        
+                        var tertiaryNav = this.parentNode.querySelector(instance.options.thirdLevelNavSelector);
+                        if(tertiaryNav) {
+                            this.classList.add(instance.options.openClass);
+                            tertiaryNav.classList.add(instance.options.openClass);
+                        }
+                    }
+                    else{
+                        resetAll();
+                    }
+                    
+                });
+             }
         }
     }
 
