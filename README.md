@@ -109,6 +109,13 @@ The basic markup uses unsorted lists to organize the menu items
 ### Callbacks
 
 -   onDesktopStickyChange: function(){}
+-   onMobileToggleClick: function(toggle, instance){}
+-   onDesktopPrimaryToggleClick: function(toggle, instance){}
+-   onDesktopSecondaryToggleClick: function(toggle, instance){}
+-   onMobilePrimaryToggleClick: function(toggle, instance){}
+-   onMobileSecondaryToggleClick: function(toggle, instance){}
+-   onMobilePrimaryAnchorClick: function(anchor, instance){}
+-   onMobileSecondaryAnchorClick: function(anchor, instance){}
 
 ## License
 

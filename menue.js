@@ -27,7 +27,7 @@
  * https://github.com/Rainsphere/menue
  *
  * Created at     : 2019-12-23 09:43:09 
- * Last modified  : 2019-12-27 10:09:37
+ * Last modified  : 2019-12-28 11:01:04
  */
 
 ( function( root, factory ) {
@@ -69,7 +69,14 @@
         mobileHasSecondaryToggleButton: false,
         mobileHasTertiaryToggleButton: false,
         //Callbacks
-        onDesktopStickyChange: function(){}
+        onDesktopStickyChange: function(instance){},
+        onMobileToggleClick: function(toggle, instance){},
+        onDesktopPrimaryToggleClick: function(toggle, instance){},
+        onDesktopSecondaryToggleClick: function(toggle, instance){},
+        onMobilePrimaryToggleClick: function(toggle, instance){},
+        onMobileSecondaryToggleClick: function(toggle, instance){},
+        onMobilePrimaryAnchorClick: function(anchor, instance){},
+        onMobileSecondaryAnchorClick: function(anchor, instance){}
     };
     /** 
      * Merge defaults with user options
@@ -148,6 +155,7 @@
                    
                     
                 }
+                instance.options.onMobileToggleClick(this, instance);
             });
         }
     }
@@ -205,6 +213,8 @@
                             secondaryNav.classList.remove(instance.options.openClass);
                         }
                     }
+
+                    instance.options.onDesktopPrimaryToggleClick(this, instance);
                 });
             }
         }
@@ -229,6 +239,7 @@
                             tertiaryNav.classList.remove(instance.options.openClass);
                         }
                     }
+                    instance.options.onDesktopSecondaryToggleClick(this, instance);
                 });
             }
         }
@@ -255,6 +266,7 @@
                             secondaryNav.classList.remove(instance.options.openClass);
                         }
                     }
+                    instance.options.onMobilePrimaryToggleClick(this, instance);
                 });
             }
            
@@ -290,7 +302,7 @@
                     else{
                         resetAll();
                     }
-                    
+                    this.options.onMobilePrimaryAnchorClick(this, instance);
                 });
             }
          
@@ -315,6 +327,7 @@
                             tertiaryNav.classList.remove(instance.options.openClass);
                         }
                     }
+                    instance.options.onMobileSecondaryToggleClick(this, instance);
                 });
             }
            
@@ -350,7 +363,7 @@
                     else{
                         resetAll();
                     }
-                    
+                    this.options.onMobileSecondaryAnchorClick(this, instance);
                 });
              }
         }
