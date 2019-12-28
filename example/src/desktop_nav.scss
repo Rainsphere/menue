@@ -4,6 +4,33 @@
     @media (max-width: 1024px) {
         display: none;
     }
+    .item-toggle-button {
+        text-indent: -9999px;
+        cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        &:after {
+            content: "\f107";
+            text-indent: 0px;
+            font-family: $fa;
+
+            color: $gold;
+            transition: all 200ms linear;
+        }
+        &:hover {
+            &:after {
+                color: white;
+            }
+        }
+        &.is-open {
+            &:after {
+                transform: rotate(180deg);
+                color: white;
+            }
+        }
+    }
     nav {
         background: #211510;
         height: 50px;
@@ -28,7 +55,7 @@
                 height: 100%;
                 position: relative;
                 a {
-                    color: #f8b700;
+                    color: $gold;
                     font-family: $roboto;
                     font-weight: 500;
                     height: 100%;
@@ -37,7 +64,18 @@
                     align-items: center;
                     transition: all 200ms linear;
                     font-size: 18px;
+                    transition: all 200ms linear;
                     &:hover {
+                        color: white;
+                        & + .item-toggle-button {
+                            &:after {
+                                color: white;
+                            }
+                        }
+                    }
+                }
+                &.is-open {
+                    & > a {
                         color: white;
                     }
                 }

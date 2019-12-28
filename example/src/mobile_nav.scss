@@ -20,6 +20,33 @@
     @media (max-width: 1024px) {
         display: block;
     }
+    .item-toggle-button {
+        text-indent: -9999px;
+        cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        &:after {
+            content: "\f107";
+            text-indent: 0px;
+            font-family: $fa;
+
+            color: $gold;
+            transition: all 200ms linear;
+        }
+        &:hover {
+            &:after {
+                color: white;
+            }
+        }
+        &.is-open {
+            &:after {
+                transform: rotate(180deg);
+                color: white;
+            }
+        }
+    }
     .header_bar {
         background: #211510;
         height: 50px;
@@ -33,11 +60,36 @@
             width: 50px;
             cursor: pointer;
             svg g {
-                fill: #f8b700;
-                transition: fill 200ms linear;
+                fill: $gold;
+                transition: all 200ms linear;
+                rect {
+                    transition: all 200ms linear;
+                }
             }
             &:hover svg g {
                 fill: white;
+            }
+            &.is-open {
+                svg g {
+                    fill: $gold;
+
+                    rect {
+                        x: 0;
+                        y: 0;
+                        &:first-child {
+                            transform: rotate(45deg) translate(50%);
+                        }
+                        &:nth-child(2n) {
+                            display: none;
+                        }
+                        &:last-child {
+                            transform: rotate(-45deg) translate(-21%, 66%);
+                        }
+                    }
+                }
+                &:hover svg g {
+                    fill: white;
+                }
             }
         }
     }
@@ -64,15 +116,24 @@
                 padding: 20px;
                 position: relative;
                 a {
-                    color: #f8b700;
+                    color: $gold;
                     font-family: $roboto;
                     font-weight: 500;
                     height: 100%;
                     text-decoration: none;
-
                     transition: all 200ms linear;
                     font-size: 18px;
                     &:hover {
+                        color: white;
+                        & + .item-toggle-button {
+                            &:after {
+                                color: white;
+                            }
+                        }
+                    }
+                }
+                &.is-open {
+                    & > a {
                         color: white;
                     }
                 }

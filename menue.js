@@ -27,7 +27,7 @@
  * https://github.com/Rainsphere/menue
  *
  * Created at     : 2019-12-23 09:43:09 
- * Last modified  : 2019-12-28 11:31:46
+ * Last modified  : 2019-12-28 11:56:21
  */
 
 ( function( root, factory ) {
@@ -140,10 +140,12 @@
         for(var i = 0; i < instance.mobileToggle.length; i++){
             var toggle = instance.mobileToggle[i];
             toggle.addEventListener('click', function(){
+                var thisToggle = this;
                 if(instance.mobileOpen)
                 {
                         instance.mobileMenu.classList.add(instance.options.mobileAnimatingClass);
                         setTimeout(function(){
+                            thisToggle.classList.remove(instance.options.openClass);
                             bodyEl.classList.remove(instance.options.mobileOpenBodyClass);
                             instance.mobileMenu.classList.remove(instance.options.openClass);
                             instance.mobileMenu.classList.remove(instance.options.mobileAnimatingClass);
@@ -155,6 +157,7 @@
                         instance.mobileMenu.classList.add(instance.options.mobileAnimatingClass);
                         bodyEl.classList.add(instance.options.mobileOpenBodyClass);
                         setTimeout(function(){
+                            thisToggle.classList.add(instance.options.openClass);
                             instance.mobileMenu.classList.add(instance.options.openClass);
                             instance.mobileMenu.classList.remove(instance.options.mobileAnimatingClass);
                             instance.mobileOpen = true;
@@ -200,7 +203,7 @@
 
     var setupDesktopMenuItemListener = function(instance){
         if(instance.options.desktopHasSecondaryToggleButton){
-            //Listen for close button clicks to open/close the secondary-nav
+            //Listen for toggle button clicks to open/close the secondary-nav
             var primaryToggleButtons = instance.desktopMenu.querySelectorAll(instance.options.firstLevelNavSelector + ' > ul > li > ' + instance.options.itemToggleButtonClass);
             for(var i = 0; i < primaryToggleButtons.length; i++)
             {
@@ -210,12 +213,14 @@
                     if(!this.classList.contains(instance.options.openClass))
                     {
                         if(secondaryNav) {
+                            this.parentNode.classList.add(instance.options.openClass);
                             this.classList.add(instance.options.openClass);
                             secondaryNav.classList.add(instance.options.openClass);
                         }
                     }
                     else{
                         if(secondaryNav) {
+                            this.parentNode.classList.remove(instance.options.openClass);
                             this.classList.remove(instance.options.openClass);
                             secondaryNav.classList.remove(instance.options.openClass);
                         }
@@ -236,12 +241,14 @@
                     if(!this.classList.contains(instance.options.openClass))
                     {
                         if(tertiaryNav) {
+                            this.parentNode.classList.add(instance.options.openClass);
                             this.classList.add(instance.options.openClass);
                             tertiaryNav.classList.add(instance.options.openClass);
                         }
                     }
                     else{
                         if(tertiaryNav) {
+                            this.parentNode.classList.remove(instance.options.openClass);
                             this.classList.remove(instance.options.openClass);
                             tertiaryNav.classList.remove(instance.options.openClass);
                         }
@@ -263,12 +270,14 @@
                     if(!this.classList.contains(instance.options.openClass))
                     {
                         if(secondaryNav) {
+                            this.parentNode.classList.add(instance.options.openClass);
                             this.classList.add(instance.options.openClass);
                             secondaryNav.classList.add(instance.options.openClass);
                         }
                     }
                     else{
                         if(secondaryNav) {
+                            this.parentNode.classList.remove(instance.options.openClass);
                             this.classList.remove(instance.options.openClass);
                             secondaryNav.classList.remove(instance.options.openClass);
                         }
@@ -324,12 +333,14 @@
                     if(!this.classList.contains(instance.options.openClass))
                     {
                         if(tertiaryNav) {
+                            this.parentNode.classList.add(instance.options.openClass);
                             this.classList.add(instance.options.openClass);
                             tertiaryNav.classList.add(instance.options.openClass);
                         }
                     }
                     else{
                         if(tertiaryNav) {
+                            this.parentNode.classList.remove(instance.options.openClass);
                             this.classList.remove(instance.options.openClass);
                             tertiaryNav.classList.remove(instance.options.openClass);
                         }
