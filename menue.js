@@ -27,7 +27,7 @@
  * https://github.com/Rainsphere/menue
  *
  * Created at     : 2019-12-23 09:43:09 
- * Last modified  : 2019-12-28 11:01:04
+ * Last modified  : 2019-12-28 11:31:46
  */
 
 ( function( root, factory ) {
@@ -111,13 +111,20 @@
          
             if(scrollTop >= instance.options.desktopStickyOffset)
             {
-                instance.desktopMenu.classList.add(instance.options.desktopStickyClass);
-                instance.options.onDesktopStickyChange(instance);
+                if(!instance.desktopMenu.classList.contains(instance.options.desktopStickyClass))
+                {
+                    instance.desktopMenu.classList.add(instance.options.desktopStickyClass);
+                    instance.options.onDesktopStickyChange(instance);
+                }
+                
             }
             else
             {
-                instance.desktopMenu.classList.remove(instance.options.desktopStickyClass);
-                instance.options.onDesktopStickyChange(instance);
+                if(instance.desktopMenu.classList.contains(instance.options.desktopStickyClass))
+                {
+                    instance.desktopMenu.classList.remove(instance.options.desktopStickyClass);
+                    instance.options.onDesktopStickyChange(instance);
+                }
             }
         });
     };
