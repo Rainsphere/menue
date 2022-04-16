@@ -1,163 +1,170 @@
 <!DOCTYPE html>
+
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="../menue.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	
 </head>
+
 <body>
-    <header>
-        <div class="desktop-menu">
-            <nav class="primary-nav">
-                <ul>
-                    <li>
-                        <a href="#main1">Menu Item 1</a><span class="item-toggle-button">Toggle</span>
-                        <div class="secondary-nav">
-                            <ul>
-                                <li>
-                                    <a href="#sub1">Sub Menu Item 1</a><span class="item-toggle-button">Toggle</span>
-                                    <div class="tertiary-nav">
-                                        <ul>
-                                            <li>
-                                                <a href="#tert1">Tertiary Item 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#tert2">Tertiary Item 2</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                <a href="#sub2">Sub Menu Item 2</a><span class="item-toggle-button">Toggle</span>
-                                    <div class="tertiary-nav">
-                                        <ul>
-                                            <li>
-                                                <a href="#tert1">Tertiary Item 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#tert2">Tertiary Item 2</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="#sub3">Sub Menu Item 3</a></li>
-                                <li><a href="#sub4">Sub Menu Item 4</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#main2">Menu Item 2</a><span class="item-toggle-button">Toggle</span>
-                        <div class="secondary-nav">
-                            <ul>
-                                <li><a href="#">Sub Menu Item 1</a></li>
-                                <li><a href="#">Sub Menu Item 2</a></li>
-                                <li><a href="#">Sub Menu Item 3</a></li>
-                                <li><a href="#">Sub Menu Item 4</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li><a href="#main3">Menu Item 3</a></li>
-                    <li><a href="#main4">Menu Item 4</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="mobile-menu">
-            <div class="header_bar">
-                <div class="mobile-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" focusable="false">
-                        <g>
-                            <rect x="15" y="16" width="18" height="2"></rect>
-                            <rect x="15" y="23" width="18" height="2"></rect>
-                            <rect x="15" y="30" width="18" height="2"></rect>
-                        </g>
-                    </svg>
-                </div>
-            </div>
-            <nav class="primary-nav">
-                <ul>
-                    <li>
-                        <a href="#main1">Menu Item 1</a><span class="item-toggle-button">Toggle</span>
-                        <div class="secondary-nav">
-                            <ul>
-                                <li>
-                                    <a href="#sub1">Sub Menu Item 1</a><span class="item-toggle-button">Toggle</span>
-                                    <div class="tertiary-nav">
-                                        <ul>
-                                            <li>
-                                                <a href="#tert1">Tertiary Item 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#tert2">Tertiary Item 2</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                <a href="#sub2">Sub Menu Item 2</a><span class="item-toggle-button">Toggle</span>
-                                    <div class="tertiary-nav">
-                                        <ul>
-                                            <li>
-                                                <a href="#tert1">Tertiary Item 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#tert2">Tertiary Item 2</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="#sub3">Sub Menu Item 3</a></li>
-                                <li><a href="#sub4">Sub Menu Item 4</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#main2">Menu Item 2</a><span class="item-toggle-button">Toggle</span>
-                        <div class="secondary-nav">
-                            <ul>
-                                <li><a href="#">Sub Menu Item 1</a></li>
-                                <li><a href="#">Sub Menu Item 2</a></li>
-                                <li><a href="#">Sub Menu Item 3</a></li>
-                                <li><a href="#">Sub Menu Item 4</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li><a href="#main3">Menu Item 3</a></li>
-                    <li><a href="#main4">Menu Item 4</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <script>
-        var menueOptions = {
-            desktopStickyOffset: 10,
-            desktopHasSecondaryToggleButton:true,
-            desktopHasTertiaryToggleButton:true,
-            mobileHasSecondaryToggleButton: true,
-            mobileHasTertiaryToggleButton: true,
-            onDesktopStickyChange: function(instance){
-                console.log('Sticky Change Callback');
-            },
-            onMobileToggleClick: function(toggle, instance){
-                console.log('Mobile Toggle Click');
-            },
-            onDesktopPrimaryToggleClick: function(toggle, instance){
-                console.log('Desktop Primary Toggle Click');
-            },
-            onDesktopSecondaryToggleClick: function(toggle, instance){
-                console.log('Desktop Secondary Toggle Click');
-            },
-            onMobilePrimaryToggleClick: function(toggle, instance){
-                console.log('Mobile Primary Toggle Click');
-            },
-            onMobileSecondaryToggleClick: function(toggle, instance){
-                console.log('Mobile Secondary Toggle Click');
-            },
-            onMobilePrimaryAnchorClick: function(anchor, instance){
-                console.log('Mobile Primary Anchor Click');
-            },
-            onMobileSecondaryAnchorClick: function(anchor, instance){
-                console.log('Mobile Secondary Anchor Click');
-            }
-        };
-    var menue = new Menue(menueOptions);
-    </script>
+	<header>
+		<div class="desktop-menu">
+			<nav class="primary-nav">
+				<ul>
+					<li>
+						<a href="#main1">Menu Item 1</a><span class="item-toggle-button">Toggle</span>
+						<div class="secondary-nav">
+							<ul>
+								<li>
+									<a href="#sub1">Sub Menu Item 1</a><span class="item-toggle-button">Toggle</span>
+									<div class="tertiary-nav">
+										<ul>
+											<li>
+												<a href="#tert1">Tertiary Item 1</a>
+											</li>
+											<li>
+												<a href="#tert2">Tertiary Item 2</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li>
+									<a href="#sub2">Sub Menu Item 2</a><span class="item-toggle-button">Toggle</span>
+									<div class="tertiary-nav">
+										<ul>
+											<li>
+												<a href="#tert1">Tertiary Item 1</a>
+											</li>
+											<li>
+												<a href="#tert2">Tertiary Item 2</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li><a href="#sub3">Sub Menu Item 3</a></li>
+								<li><a href="#sub4">Sub Menu Item 4</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="#main2">Menu Item 2</a><span class="item-toggle-button">Toggle</span>
+						<div class="secondary-nav">
+							<ul>
+								<li><a href="#">Sub Menu Item 1</a></li>
+								<li><a href="#">Sub Menu Item 2</a></li>
+								<li><a href="#">Sub Menu Item 3</a></li>
+								<li><a href="#">Sub Menu Item 4</a></li>
+							</ul>
+						</div>
+					</li>
+					<li><a href="#main3">Menu Item 3</a></li>
+					<li><a href="#main4">Menu Item 4</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="mobile-menu">
+			<div class="header_bar">
+				<div class="mobile-toggle">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+						viewBox="0 0 48 48" focusable="false">
+						<g>
+							<rect x="15" y="16" width="18" height="2"></rect>
+							<rect x="15" y="23" width="18" height="2"></rect>
+							<rect x="15" y="30" width="18" height="2"></rect>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<nav class="primary-nav">
+				<ul>
+					<li>
+						<a href="#main1">Menu Item 1</a><span class="item-toggle-button">Toggle</span>
+						<div class="secondary-nav">
+							<ul>
+								<li>
+									<a href="#sub1">Sub Menu Item 1</a><span class="item-toggle-button">Toggle</span>
+									<div class="tertiary-nav">
+										<ul>
+											<li>
+												<a href="#tert1">Tertiary Item 1</a>
+											</li>
+											<li>
+												<a href="#tert2">Tertiary Item 2</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li>
+									<a href="#sub2">Sub Menu Item 2</a><span class="item-toggle-button">Toggle</span>
+									<div class="tertiary-nav">
+										<ul>
+											<li>
+												<a href="#tert1">Tertiary Item 1</a>
+											</li>
+											<li>
+												<a href="#tert2">Tertiary Item 2</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li><a href="#sub3">Sub Menu Item 3</a></li>
+								<li><a href="#sub4">Sub Menu Item 4</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="#main2">Menu Item 2</a><span class="item-toggle-button">Toggle</span>
+						<div class="secondary-nav">
+							<ul>
+								<li><a href="#">Sub Menu Item 1</a></li>
+								<li><a href="#">Sub Menu Item 2</a></li>
+								<li><a href="#">Sub Menu Item 3</a></li>
+								<li><a href="#">Sub Menu Item 4</a></li>
+							</ul>
+						</div>
+					</li>
+					<li><a href="#main3">Menu Item 3</a></li>
+					<li><a href="#main4">Menu Item 4</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<script src="../dist/menue.js"></script>
+	<script>
+		var menueOptions = {
+			desktopStickyOffset: 10,
+			desktopHasSecondaryToggleButton: true,
+			desktopHasTertiaryToggleButton: true,
+			mobileHasSecondaryToggleButton: true,
+			mobileHasTertiaryToggleButton: true,
+			onDesktopStickyChange: function (instance) {
+				console.log('Sticky Change Callback');
+			},
+			onMobileToggleClick: function (toggle, instance) {
+				console.log('Mobile Toggle Click');
+			},
+			onDesktopPrimaryToggleClick: function (toggle, instance) {
+				console.log('Desktop Primary Toggle Click');
+			},
+			onDesktopSecondaryToggleClick: function (toggle, instance) {
+				console.log('Desktop Secondary Toggle Click');
+			},
+			onMobilePrimaryToggleClick: function (toggle, instance) {
+				console.log('Mobile Primary Toggle Click');
+			},
+			onMobileSecondaryToggleClick: function (toggle, instance) {
+				console.log('Mobile Secondary Toggle Click');
+			},
+			onMobilePrimaryAnchorClick: function (anchor, instance) {
+				console.log('Mobile Primary Anchor Click');
+			},
+			onMobileSecondaryAnchorClick: function (anchor, instance) {
+				console.log('Mobile Secondary Anchor Click');
+			}
+		};
+		var menue = new Menue(menueOptions);
+
+		console.log(menue);
+	</script>
 </body>
+
 </html>

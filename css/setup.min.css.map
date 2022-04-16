@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,OAAO,CAAC,8EAAI,CACZ,OAAO,CAAC,qFAAI",
+    "sources": [
+        "../example/src/setup.scss"
+    ],
+    "names": [],
+    "file": "setup.min.css"
+}
