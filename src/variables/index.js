@@ -22,12 +22,20 @@ export const defaults = {
     mobileHasSecondaryToggleButton: false,
     mobileHasTertiaryToggleButton: false,
     //Callbacks
-    onDesktopStickyChange: function(instance){},
-    onMobileToggleClick: function(toggle, instance){},
-    onDesktopPrimaryToggleClick: function(toggle, instance){},
-    onDesktopSecondaryToggleClick: function(toggle, instance){},
-    onMobilePrimaryToggleClick: function(toggle, instance){},
-    onMobileSecondaryToggleClick: function(toggle, instance){},
-    onMobilePrimaryAnchorClick: function(anchor, instance){},
-    onMobileSecondaryAnchorClick: function(anchor, instance){}
+    // onDesktopStickyChange: function (instance) {}
+    onDesktopStickyChange: () => {}, 
+    // onMobileToggleClick: function (toggle, instance) {}
+    onMobileToggleClick: () => {},
+    // onDesktopPrimaryToggleClick: function (toggle, instance) {}
+    onDesktopPrimaryToggleClick: () => {},
+    // onDesktopSecondaryToggleClick: function (toggle, instance) {}
+    onDesktopSecondaryToggleClick: () => {},
+    // onMobilePrimaryToggleClick: function (toggle, instance) {}
+    onMobilePrimaryToggleClick: () => {},
+    // onMobileSecondaryToggleClick: function (toggle, instance) {}
+    onMobileSecondaryToggleClick: () => {},
+    // onMobileTertiaryToggleClick: function (anchor, instance) {}
+    onMobilePrimaryAnchorClick: () => {},
+    // onMobileSecondaryAnchorClick: function (anchor, instance) {}
+    onMobileSecondaryAnchorClick: () => {},
 };

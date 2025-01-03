@@ -1,142 +1,120 @@
 # Menue
 
-Vanilla Javascript menu manager.
+A flexible navigation management system for responsive websites.
 
-## Usage
+## Installation
 
-### Initializing
-
-```
-<script>
-  var menue = new Menue({});
-</script>
+1. Download the latest release from GitHub
+2. Include the script in your HTML:
+```html
+<script src="path/to/menue.min.js"></script>
 ```
 
-### Basic Markup
-
-The basic markup uses unsorted lists to organize the menu items
-
-#### Desktop
-
-```
-...
-<div class="desktop-menu">
-  <nav class="primary-nav">
-    <ul>
-      <li>
-        <a href='#'>Menu Item 1</a>
-        <div class="secondary-nav">
-          <ul>
-            <li>
-              <a href=''>Secondary Menu Item 1</a>
-              <div class="tertiary-nav">
-                <ul>
-                  <li>
-                    <a href=''>Tertiary Menu Item 1</a>
-                  </li>
-                  <li>
-                    <a href=''>Tertiary Menu Item 2</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li>
-              <a href=''>Secondary Menu Item 2</a>
-            </li>
-          </ul>
-        </div>
-      </li>
-      <li>
-        <a href=''>Menu Item 2</a>
-      </li>
-    </ul>
-  </nav>
-</div>
-...
+Or import as a module:
+```javascript
+import Menue from './path/to/menue.js';
 ```
 
-#### Mobile
+## Basic Usage
 
-```
-...
-<div class="mobile-menu">
-  <div class="header_bar">
-    <div class="mobile-toggle">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" focusable="false">
-        <g>
-          <rect x="15" y="16" width="18" height="2"></rect>
-          <rect x="15" y="23" width="18" height="2"></rect>
-          <rect x="15" y="30" width="18" height="2"></rect>
-        </g>
-      </svg>
-    </div>
-  </div>
-  <nav class="primary-nav">
-    <ul>
-...
+```javascript
+const nav = new Menue({
+    desktopMenuSelector: '.main-nav',
+    mobileMenuSelector: '.mobile-nav',
+    mobileToggleSelector: '.nav-toggle'
+});
 ```
 
-## Options
+## Configuration Options
 
 ### General Options
 
--   firstLevelNavSelector: '.primary-nav'
--   secondLevelNavSelector: '.secondary-nav'
--   thirdLevelNavSelector: '.tertiary-nav'
--   itemToggleButtonClass: '.item-toggle-button'
--   hasSecondaryClass: 'has-secondary'
--   hasTertiaryClass: 'has-tertiary'
--   openClass: 'is-open'
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `firstLevelNavSelector` | string | '.primary-nav' | Selector for primary navigation |
+| `secondLevelNavSelector` | string | '.secondary-nav' | Selector for secondary navigation |
+| `thirdLevelNavSelector` | string | '.tertiary-nav' | Selector for tertiary navigation |
+| `itemToggleButtonClass` | string | '.item-toggle-button' | Class for toggle buttons |
+| `hasSecondaryClass` | string | 'has-secondary' | Class added to items with secondary nav |
+| `hasTertiaryClass` | string | 'has-tertiary' | Class added to items with tertiary nav |
+| `openClass` | string | 'is-open' | Class added to open menu items |
 
 ### Desktop Options
 
--   desktopMenuSelector: '.desktop-menu'
--   desktopStickyOffset: 50
--   desktopStickyClass: 'is-sticky'
--   desktopHasSecondaryToggleButton: false
--   desktopHasTertiaryToggleButton: false
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `desktopMenuSelector` | string | '.desktop-menu' | Main desktop menu selector |
+| `desktopStickyOffset` | number | 50 | Pixels from top before sticky |
+| `desktopStickyClass` | string | 'is-sticky' | Class added when menu is sticky |
+| `desktopHasSecondaryToggleButton` | boolean | false | Enable secondary toggle buttons |
+| `desktopHasTertiaryToggleButton` | boolean | false | Enable tertiary toggle buttons |
 
 ### Mobile Options
 
--   mobileMenuSelector: '.mobile-menu'
--   mobileToggleSelector: '.mobile-toggle'
--   mobileAnimatingClass: 'is-animating'
--   mobileDisplayDelay: 200
--   mobileOpenBodyClass: 'mobile-menu-open'
--   mobileHasSecondaryToggleButton: false
--   mobileHasTertiaryToggleButton: false
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `mobileMenuSelector` | string | '.mobile-menu' | Mobile menu selector |
+| `mobileToggleSelector` | string | '.mobile-toggle' | Mobile toggle button selector |
+| `mobileAnimatingClass` | string | 'is-animating' | Class during animations |
+| `mobileDisplayDelay` | number | 200 | Animation duration in ms |
+| `mobileOpenBodyClass` | string | 'mobile-menu-open' | Class added to body |
 
-### Callbacks
+## Events
 
--   onDesktopStickyChange: function(){}
--   onMobileToggleClick: function(toggle, instance){}
--   onDesktopPrimaryToggleClick: function(toggle, instance){}
--   onDesktopSecondaryToggleClick: function(toggle, instance){}
--   onMobilePrimaryToggleClick: function(toggle, instance){}
--   onMobileSecondaryToggleClick: function(toggle, instance){}
--   onMobilePrimaryAnchorClick: function(anchor, instance){}
--   onMobileSecondaryAnchorClick: function(anchor, instance){}
+| Callback | Parameters | Description |
+|----------|------------|-------------|
+| `onDesktopStickyChange` | `(instance)` | Called when sticky state changes. The `instance` parameter is the Menue instance. |
+| `onMobileToggleClick` | `(toggle, instance)` | Called when mobile menu toggle is clicked. The `toggle` parameter is the clicked button element. |
+| `onDesktopPrimaryToggleClick` | `(toggle, instance)` | Called when desktop primary level toggle is clicked. |
+| `onDesktopSecondaryToggleClick` | `(toggle, instance)` | Called when desktop secondary level toggle is clicked. |
+| `onMobilePrimaryToggleClick` | `(toggle, instance)` | Called when mobile primary level toggle is clicked. |
+| `onMobileSecondaryToggleClick` | `(toggle, instance)` | Called when mobile secondary level toggle is clicked. |
+| `onMobilePrimaryAnchorClick` | `(anchor, instance)` | Called when mobile primary level anchor is clicked. |
+| `onMobileSecondaryAnchorClick` | `(anchor, instance)` | Called when mobile secondary level anchor is clicked. |
+
+Example usage of callbacks:
+
+```javascript
+const nav = new Menue({
+    onDesktopStickyChange: (instance) => {
+        console.log('Menu sticky state changed');
+    },
+    onMobileToggleClick: (toggle, instance) => {
+        console.log('Mobile menu toggled:', toggle);
+        analytics.track('mobile_menu_interaction');
+    },
+    onMobilePrimaryAnchorClick: (anchor, instance) => {
+        console.log('Primary link clicked:', anchor.href);
+    }
+});
+```
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Install dependencies (`npm install`)
+4. Make your changes
+5. Run build (`npm run build`)
+6. Commit changes (`git commit -m 'Add amazing feature'`)
+7. Push to branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+### Development Setup
+
+```bash
+git clone https://github.com/yourusername/menue.git
+cd menue
+npm install
+npm run watch
+```
+
+### Code Style
+
+- Use ES6+ features where appropriate
+- Add JSDoc comments for functions
+- Follow existing naming conventions
+- Write unit tests for new features
 
 ## License
 
-MIT License
-
-Copyright (c) 2019-2022 David Spencer
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+MIT License - see LICENSE file for details

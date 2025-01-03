@@ -1,12 +1,12 @@
-import { extend } from "./utils/index.js";
-import { defaults } from "./variables/index.js";
-import { setupStickyListener } from "./sticky.js";
+import { extend } from './utils/index.js';
+import { defaults } from './variables/index.js';
+import { setupStickyListener } from './sticky.js';
 import {
     setupMobileClasses,
     setupMobileToggleListener,
     setupMobileMenuItemListener,
-} from "./mobile.js";
-import { setupDesktopMenuItemListener } from "./desktop.js";
+} from './mobile.js';
+import { setupDesktopMenuItemListener } from './desktop.js';
 export function initMixin(Menue) {
     Menue.prototype.init = function (options) {
         const menue = this;

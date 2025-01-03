@@ -1,14 +1,15 @@
 {
     "name": "menue",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Navigation Management",
-    "main": "dist/menue.js",
-    "directories": {
-        "example": "example"
-    },
+    "private": true,
     "scripts": {
         "build": "rollup -c",
-        "watch": "rollup -c --watch"
+        "watch": "rollup -c --watch",
+        "lint": "eslint src/**/*.js",
+        "lint:fix": "eslint src/**/*.js --fix",
+        "format": "prettier --write \"src/**/*.{js,json,md}\"",
+        "format:check": "prettier --check \"src/**/*.{js,json,md}\""
     },
     "author": "David Spencer",
     "license": "MIT",
@@ -16,7 +17,10 @@
         "@babel/core": "^7.17.9",
         "rollup": "^2.70.2",
         "rollup-plugin-babel": "^4.4.0",
-        "rollup-plugin-terser": "^7.0.2"
-    },
-    "dependencies": {}
+        "rollup-plugin-terser": "^7.0.2",
+        "eslint": "^8.40.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-import": "^2.27.5",
+        "prettier": "^2.8.8"
+    }
 }
