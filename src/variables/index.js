@@ -23,7 +23,7 @@ export const defaults = {
     mobileHasTertiaryToggleButton: false,
     //Callbacks
     // onDesktopStickyChange: function (instance) {}
-    onDesktopStickyChange: () => {}, 
+    onDesktopStickyChange: () => {},
     // onMobileToggleClick: function (toggle, instance) {}
     onMobileToggleClick: () => {},
     // onDesktopPrimaryToggleClick: function (toggle, instance) {}

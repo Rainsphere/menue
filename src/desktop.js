@@ -1,4 +1,4 @@
-import { handleToggleClick } from './utils';
+import { handleToggleClick } from './utils/index.js';
 
 export function setupDesktopMenuItemListener(menue) {
     const {
@@ -14,12 +14,9 @@ export function setupDesktopMenuItemListener(menue) {
 
         primaryToggleButtons.forEach(button => {
             button.addEventListener('click', function () {
-                const secondaryNav = this.parentNode.querySelector(
-                    secondLevelNavSelector
-                );
-                handleToggleClick(this, secondaryNav, menue.$options, toggle =>
-                    menue.$options.onDesktopPrimaryToggleClick(toggle, menue)
-                );
+                handleToggleClick(this, menue.$options, function(toggle) {
+                    menue.$options.onDesktopPrimaryToggleClick(toggle, menue);
+                });
             });
         });
     }

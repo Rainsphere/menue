@@ -1,4 +1,4 @@
-import { toggleClass } from './utils';
+import { toggleClass } from './utils/index.js';
 
 /**
  * Common handler for toggle button clicks
