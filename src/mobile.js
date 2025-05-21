@@ -1,4 +1,8 @@
-import { toggleClass } from './utils/index.js';
+import {
+    toggleClass,
+    generateUniqueId,
+    handleKeyboardActivation,
+} from './utils/index.js';
 
 /**
  * Common handler for toggle button clicks
@@ -18,18 +22,38 @@ function handleToggleClick(button, nav, options, callback) {
 }
 
 export function setupMobileToggleListener(menue) {
-    var bodyEl = document.querySelectorAll('body')[0];
+    const bodyEl = document.querySelector('body'); // More specific
 
-    for (var i = 0; i < menue._mobileToggle.length; i++) {
-        var toggle = menue._mobileToggle[i];
-        toggle.addEventListener('click', function () {
-            var thisToggle = this;
-            if (menue._mobileOpen) {
+    if (!menue._mobileMenu) return;
+
+    // Ensure mobile menu has an ID for aria-controls
+    if (!menue._mobileMenu.id) {
+        menue._mobileMenu.id = generateUniqueId('menue-mobile-main-');
+    }
+
+    for (let i = 0; i < menue._mobileToggle.length; i++) {
+        const toggle = menue._mobileToggle[i];
+
+        // Initial ARIA attributes for the main mobile toggle
+        toggle.setAttribute('aria-controls', menue._mobileMenu.id);
+        toggle.setAttribute('aria-expanded', 'false'); // Initial state
+        toggle.setAttribute('aria-haspopup', 'true'); // Indicates it controls a menu
+
+        if (toggle.tagName.toLowerCase() !== 'button') {
+            toggle.setAttribute('role', 'button');
+            toggle.setAttribute('tabindex', '0');
+        }
+
+        const performToggleAction = function (event) {
+            // `this` will be the toggle element
+            const isCurrentlyOpen = menue._mobileOpen; // State before action
+
+            if (isCurrentlyOpen) {
                 menue._mobileMenu.classList.add(
                     menue.$options.mobileAnimatingClass
                 );
-                setTimeout(function () {
-                    thisToggle.classList.remove(menue.$options.openClass);
+                setTimeout(() => {
+                    this.classList.remove(menue.$options.openClass);
                     bodyEl.classList.remove(menue.$options.mobileOpenBodyClass);
                     menue._mobileMenu.classList.remove(
                         menue.$options.openClass
@@ -38,199 +62,307 @@ export function setupMobileToggleListener(menue) {
                         menue.$options.mobileAnimatingClass
                     );
                     menue._mobileOpen = false;
+                    this.setAttribute('aria-expanded', 'false'); // Update ARIA
                 }, menue.$options.mobileDisplayDelay);
             } else {
                 menue._mobileMenu.classList.add(
                     menue.$options.mobileAnimatingClass
                 );
                 bodyEl.classList.add(menue.$options.mobileOpenBodyClass);
-                setTimeout(function () {
-                    thisToggle.classList.add(menue.$options.openClass);
+                setTimeout(() => {
+                    this.classList.add(menue.$options.openClass);
                     menue._mobileMenu.classList.add(menue.$options.openClass);
                     menue._mobileMenu.classList.remove(
                         menue.$options.mobileAnimatingClass
                     );
                     menue._mobileOpen = true;
+                    this.setAttribute('aria-expanded', 'true'); // Update ARIA
                 }, menue.$options.mobileDisplayDelay);
             }
             menue.$options.onMobileToggleClick(this, menue);
-        });
+        };
+
+        toggle.addEventListener('click', performToggleAction);
+
+        if (toggle.tagName.toLowerCase() !== 'button') {
+            toggle.addEventListener('keydown', function (event) {
+                handleKeyboardActivation(event, performToggleAction);
+            });
+        }
     }
 }
 
 export function setupMobileClasses(menue) {
-    var primaryItems = menue._mobileMenu.querySelectorAll(
-        menue.$options.firstLevelNavSelector + ' > ul > li'
+    const primaryItems = menue._mobileMenu.querySelectorAll(
+        `${menue.$options.firstLevelNavSelector} > ul > li`
     );
 
-    //check for secondary nav
-    for (var i = 0; i < primaryItems.length; i++) {
-        var secondaryItem = primaryItems[i].querySelector(
+    primaryItems.forEach((primaryItem, index) => {
+        const secondaryNav = primaryItem.querySelector(
             menue.$options.secondLevelNavSelector
         );
-        if (secondaryItem) {
-            //we have secondary nav
-            primaryItems[i].classList.add(menue.$options.hasSecondaryClass);
-            //check for tertiary nav
-            var secondaryItems = secondaryItem.querySelectorAll('ul > li');
-            for (var j = 0; j < secondaryItems.length; j++) {
-                var tertiaryItem = secondaryItems[j].querySelector(
+        let primaryToggle = primaryItem.querySelector('a'); // Default to anchor
+        if (menue.$options.mobileHasSecondaryToggleButton) {
+            primaryToggle =
+                primaryItem.querySelector(
+                    menue.$options.itemToggleButtonClass
+                ) || primaryToggle;
+        }
+
+        if (secondaryNav && primaryToggle) {
+            primaryItem.classList.add(menue.$options.hasSecondaryClass);
+
+            // ARIA for primary toggle
+            primaryToggle.setAttribute('aria-haspopup', 'true');
+            primaryToggle.setAttribute('aria-expanded', 'false');
+            if (primaryToggle.tagName.toLowerCase() !== 'button') {
+                primaryToggle.setAttribute('role', 'button');
+                primaryToggle.setAttribute('tabindex', '0');
+            }
+
+            // ID and ARIA-CONTROLS for secondary nav
+            if (!secondaryNav.id) {
+                secondaryNav.id = generateUniqueId('menue-secondary-');
+            }
+            primaryToggle.setAttribute('aria-controls', secondaryNav.id);
+
+            const secondaryItems = secondaryNav.querySelectorAll('ul > li');
+            secondaryItems.forEach((secondaryItem, sIndex) => {
+                const tertiaryNav = secondaryItem.querySelector(
                     menue.$options.thirdLevelNavSelector
                 );
-                if (tertiaryItem) {
-                    secondaryItems[j].classList.add(
+                let secondaryToggle = secondaryItem.querySelector('a'); // Default to anchor
+                if (menue.$options.mobileHasTertiaryToggleButton) {
+                    secondaryToggle =
+                        secondaryItem.querySelector(
+                            menue.$options.itemToggleButtonClass
+                        ) || secondaryToggle;
+                }
+
+                if (tertiaryNav && secondaryToggle) {
+                    secondaryItem.classList.add(
                         menue.$options.hasTertiaryClass
                     );
+
+                    // ARIA for secondary toggle
+                    secondaryToggle.setAttribute('aria-haspopup', 'true');
+                    secondaryToggle.setAttribute('aria-expanded', 'false');
+                    if (secondaryToggle.tagName.toLowerCase() !== 'button') {
+                        secondaryToggle.setAttribute('role', 'button');
+                        secondaryToggle.setAttribute('tabindex', '0');
+                    }
+
+                    // ID and ARIA-CONTROLS for tertiary nav
+                    if (!tertiaryNav.id) {
+                        tertiaryNav.id = generateUniqueId('menue-tertiary-');
+                    }
+                    secondaryToggle.setAttribute(
+                        'aria-controls',
+                        tertiaryNav.id
+                    );
                 }
-            }
+            });
         }
-    }
+    });
 }
 
 export function setupMobileMenuItemListener(menue) {
+    if (!menue._mobileMenu) return;
+
+    // Helper function for click logic, now incorporating ARIA update
+    const itemToggleClickHandler = function (eventOrElement, isAnchor = false) {
+        const toggleElement = eventOrElement.currentTarget || eventOrElement; // event.currentTarget for event, or element itself
+        const parentLi = toggleElement.closest('li');
+        if (!parentLi) return;
+
+        const controlledNavSelector = parentLi.classList.contains(
+            menue.$options.hasSecondaryClass
+        )
+            ? menue.$options.secondLevelNavSelector
+            : menue.$options.thirdLevelNavSelector;
+        const subNav = parentLi.querySelector(controlledNavSelector);
+
+        if (isAnchor) {
+            // Anchor-specific logic from original code
+            if (
+                !parentLi.classList.contains(
+                    menue.$options.hasSecondaryClass
+                ) &&
+                !parentLi.classList.contains(menue.$options.hasTertiaryClass)
+            ) {
+                // Not a toggle anchor, let it navigate or do its thing
+                // Call relevant callback if it exists
+                if (parentLi.closest(menue.$options.firstLevelNavSelector)) {
+                    menue.$options.onMobilePrimaryAnchorClick(
+                        toggleElement,
+                        menue
+                    );
+                } else if (
+                    parentLi.closest(menue.$options.secondLevelNavSelector)
+                ) {
+                    menue.$options.onMobileSecondaryAnchorClick(
+                        toggleElement,
+                        menue
+                    );
+                }
+                return;
+            }
+
+            // It's an anchor acting as a toggle
+            if (
+                eventOrElement.preventDefault &&
+                (parentLi.classList.contains(
+                    menue.$options.hasSecondaryClass
+                ) ||
+                    parentLi.classList.contains(
+                        menue.$options.hasTertiaryClass
+                    ))
+            ) {
+                eventOrElement.preventDefault();
+            }
+
+            const currentlyOpen = toggleElement.classList.contains(
+                menue.$options.openClass
+            );
+            const shouldOpen =
+                !currentlyOpen &&
+                (parentLi.classList.contains(
+                    menue.$options.hasSecondaryClass
+                ) ||
+                    parentLi.classList.contains(
+                        menue.$options.hasTertiaryClass
+                    ));
+
+            // Reset others (simplified, might need more specific scoping like original)
+            const allAnchors = menue._mobileMenu.querySelectorAll('a');
+            allAnchors.forEach(a => {
+                if (a !== toggleElement)
+                    a.classList.remove(menue.$options.openClass);
+                // also remove open from parent LIs and subnavs if needed for accordion style
+            });
+            const allSubNavs = menue._mobileMenu.querySelectorAll(
+                `${menue.$options.secondLevelNavSelector}, ${menue.$options.thirdLevelNavSelector}`
+            );
+            allSubNavs.forEach(sn => {
+                if (sn !== subNav)
+                    sn.classList.remove(menue.$options.openClass);
+            });
+
+            if (shouldOpen && subNav) {
+                toggleElement.classList.add(menue.$options.openClass);
+                subNav.classList.add(menue.$options.openClass);
+                toggleElement.setAttribute('aria-expanded', 'true');
+            } else {
+                // Closing or already closed
+                toggleElement.classList.remove(menue.$options.openClass);
+                if (subNav) subNav.classList.remove(menue.$options.openClass);
+                toggleElement.setAttribute('aria-expanded', 'false');
+            }
+            // Call relevant callback
+            if (parentLi.closest(menue.$options.firstLevelNavSelector)) {
+                menue.$options.onMobilePrimaryAnchorClick(toggleElement, menue);
+            } else if (
+                parentLi.closest(menue.$options.secondLevelNavSelector)
+            ) {
+                menue.$options.onMobileSecondaryAnchorClick(
+                    toggleElement,
+                    menue
+                );
+            }
+        } else {
+            // Button toggle logic (uses global handleToggleClick from utils)
+            if (subNav) {
+                // Pass event to handleToggleClick
+                handleToggleClick(eventOrElement, menue.$options, toggle => {
+                    if (
+                        parentLi.classList.contains(
+                            menue.$options.hasSecondaryClass
+                        )
+                    ) {
+                        menue.$options.onMobilePrimaryToggleClick(
+                            toggle,
+                            menue
+                        );
+                    } else if (
+                        parentLi.classList.contains(
+                            menue.$options.hasTertiaryClass
+                        )
+                    ) {
+                        // Assuming this is for tertiary
+                        menue.$options.onMobileSecondaryToggleClick(
+                            toggle,
+                            menue
+                        );
+                    }
+                });
+            }
+        }
+    };
+
+    // Primary Toggles / Anchors
     if (menue.$options.mobileHasSecondaryToggleButton) {
         const primaryToggleButtons = menue._mobileMenu.querySelectorAll(
             `${menue.$options.firstLevelNavSelector} > ul > li > ${menue.$options.itemToggleButtonClass}`
         );
-
         primaryToggleButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const secondaryNav = this.parentNode.querySelector(
-                    menue.$options.secondLevelNavSelector
-                );
-                handleToggleClick(this, secondaryNav, menue.$options, toggle =>
-                    menue.$options.onMobilePrimaryToggleClick(toggle, menue)
-                );
-            });
+            button.addEventListener('click', itemToggleClickHandler);
+            if (button.tagName.toLowerCase() !== 'button') {
+                // Should have role="button" from setupMobileClasses
+                button.addEventListener('keydown', function (event) {
+                    handleKeyboardActivation(event, itemToggleClickHandler);
+                });
+            }
         });
     } else {
-        //Listen for anchor clicks to open/close the secondary-nav
-        var primaryAnchors = menue._mobileMenu.querySelectorAll(
-            menue.$options.firstLevelNavSelector + ' > ul > li > a'
+        const primaryAnchors = menue._mobileMenu.querySelectorAll(
+            `${menue.$options.firstLevelNavSelector} > ul > li > a`
         );
-        for (var a = 0; a < primaryAnchors.length; a++) {
-            var anchor = primaryAnchors[a];
+        primaryAnchors.forEach(anchor => {
             anchor.addEventListener('click', function (event) {
-                var resetAll = function () {
-                    for (var j = 0; j < primaryAnchors.length; j++) {
-                        primaryAnchors[j].classList.remove(
-                            menue.$options.openClass
-                        );
-                    }
-
-                    var allSecondaryNavs = menue._mobileMenu.querySelectorAll(
-                        menue.$options.secondLevelNavSelector
-                    );
-                    for (var k = 0; k < allSecondaryNavs.length; k++) {
-                        allSecondaryNavs[k].classList.remove(
-                            menue.$options.openClass
-                        );
-                    }
-                };
-
-                if (
-                    !this.classList.contains(menue.$options.openClass) &&
-                    this.parentNode.classList.contains(
-                        menue.$options.hasSecondaryClass
-                    )
-                ) {
-                    event.preventDefault();
-                    resetAll();
-
-                    var secondaryNav = this.parentNode.querySelector(
-                        menue.$options.secondLevelNavSelector
-                    );
-                    if (secondaryNav) {
-                        this.classList.add(menue.$options.openClass);
-                        secondaryNav.classList.add(menue.$options.openClass);
-                    }
-                } else {
-                    resetAll();
-                }
-                this.options.onMobilePrimaryAnchorClick(this, menue);
+                itemToggleClickHandler(event, true);
             });
-        }
+            // Anchors acting as toggles should have role="button" from setupMobileClasses
+            if (anchor.getAttribute('role') === 'button') {
+                anchor.addEventListener('keydown', function (event) {
+                    handleKeyboardActivation(event, function (e) {
+                        itemToggleClickHandler(e, true);
+                    });
+                });
+            }
+        });
     }
+
+    // Secondary Toggles / Anchors (for tertiary nav)
     if (menue.$options.mobileHasTertiaryToggleButton) {
-        //Listen for close button clicks to open/close the tertiary-nav
-        var secondaryToggleButtons = menue._mobileMenu.querySelectorAll(
-            menue.$options.secondLevelNavSelector +
-                ' > ul > li > ' +
-                menue.$options.itemToggleButtonClass
+        const secondaryToggleButtons = menue._mobileMenu.querySelectorAll(
+            `${menue.$options.secondLevelNavSelector} > ul > li > ${menue.$options.itemToggleButtonClass}`
         );
-        for (var l = 0; l < secondaryToggleButtons.length; l++) {
-            var secTogButton = secondaryToggleButtons[l];
-            secTogButton.addEventListener('click', function () {
-                var tertiaryNav = this.parentNode.querySelector(
-                    menue.$options.thirdLevelNavSelector
-                );
-                if (!this.classList.contains(menue.$options.openClass)) {
-                    if (tertiaryNav) {
-                        this.parentNode.classList.add(menue.$options.openClass);
-                        this.classList.add(menue.$options.openClass);
-                        tertiaryNav.classList.add(menue.$options.openClass);
-                    }
-                } else {
-                    if (tertiaryNav) {
-                        this.parentNode.classList.remove(
-                            menue.$options.openClass
-                        );
-                        this.classList.remove(menue.$options.openClass);
-                        tertiaryNav.classList.remove(menue.$options.openClass);
-                    }
-                }
-                menue.$options.onMobileSecondaryToggleClick(this, menue);
-            });
-        }
+        secondaryToggleButtons.forEach(button => {
+            button.addEventListener('click', itemToggleClickHandler);
+            if (button.tagName.toLowerCase() !== 'button') {
+                // Should have role="button"
+                button.addEventListener('keydown', function (event) {
+                    handleKeyboardActivation(event, itemToggleClickHandler);
+                });
+            }
+        });
     } else {
-        //Listen for anchor clicks to open/close the tertiary-nav
-        var secondaryAnchors = menue._mobileMenu.querySelectorAll(
-            menue.$options.secondLevelNavSelector + ' > ul > li > a'
+        const secondaryAnchors = menue._mobileMenu.querySelectorAll(
+            `${menue.$options.secondLevelNavSelector} > ul > li > a`
         );
-
-        for (var m = 0; m < secondaryAnchors.length; m++) {
-            var secAnchor = secondaryAnchors[m];
-            secAnchor.addEventListener('click', function (event) {
-                var resetAll = function () {
-                    for (var j = 0; j < secondaryAnchors.length; j++) {
-                        secondaryAnchors[j].classList.remove(
-                            menue.$options.openClass
-                        );
-                    }
-
-                    var allTertiaryNavs =
-                        anchor.parentNode.parentNode.querySelectorAll(
-                            menue.$options.thirdLevelNavSelector
-                        );
-                    for (var k = 0; k < allTertiaryNavs.length; k++) {
-                        allTertiaryNavs[k].classList.remove(
-                            menue.$options.openClass
-                        );
-                    }
-                };
-
-                if (
-                    !this.classList.contains(menue.$options.openClass) &&
-                    this.parentNode.classList.contains(
-                        menue.$options.hasTertiaryClass
-                    )
-                ) {
-                    event.preventDefault();
-                    resetAll();
-
-                    var tertiaryNav = this.parentNode.querySelector(
-                        menue.$options.thirdLevelNavSelector
-                    );
-                    if (tertiaryNav) {
-                        this.classList.add(menue.$options.openClass);
-                        tertiaryNav.classList.add(menue.$options.openClass);
-                    }
-                } else {
-                    resetAll();
-                }
-                menue.options.onMobileSecondaryAnchorClick(this, menue);
+        secondaryAnchors.forEach(anchor => {
+            anchor.addEventListener('click', function (event) {
+                itemToggleClickHandler(event, true);
             });
-        }
+            if (anchor.getAttribute('role') === 'button') {
+                // Anchors acting as toggles
+                anchor.addEventListener('keydown', function (event) {
+                    handleKeyboardActivation(event, function (e) {
+                        itemToggleClickHandler(e, true);
+                    });
+                });
+            }
+        });
     }
 }
 
